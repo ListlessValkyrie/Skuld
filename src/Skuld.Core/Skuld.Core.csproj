@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <UserSecretsId>b452a1fd-daf4-4f7f-8481-c578ce3db315</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="sqlite-net-pcl" Version="1.7.335" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Skuld.Architecture\Skuld.Architecture.csproj" />
+  </ItemGroup>
+
+</Project>
