@@ -1,13 +1,12 @@
-﻿using Skuld.Architecture.Tables;
+﻿using Skuld.Architecture;
 using SQLite;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 
 namespace Skuld.Core
 {
-	public class SkuldConfig
+	public class SkuldConfig : ISkuldConfig
 	{
 		public string AbsFilePath { get; }
 
@@ -30,24 +29,43 @@ namespace Skuld.Core
 			if (!connection.GetTableInfo("databaseRevision").Any()) HandleCreateBaseTables();
 		}
 
+		public int ExecuteNonQuery(string cmdText)
+		{
+			SQLiteCommand command = connection.CreateCommand(cmdText);
+			return command.ExecuteNonQuery();
+		}
+
 		private void HandleCreateBaseTables()
 		{
 			List<string> commands = new List<string>
 			{
-				"CREATE TABLE databaseRevision('revision' INTEGER NOT NULL, 'date' DATETIME DEFAULT current_timestamp, 'repositoryType' TEXT NOT NULL, PRIMARY KEY('revision'))",
+				"CREATE TABLE databaseRevision('revision' INTEGER NOT NULL, 'date' DATETIME DEFAULT current_timestamp, 'dbType' TEXT NOT NULL, PRIMARY KEY('revision'))",
 				"CREATE TABLE databaseVersion('revision' INTEGER NOT NULL, 'major' INTEGER NOT NULL, 'minor' INTEGER NOT NULL, 'patch' INTEGER NOT NULL, 'description' TEXT, FOREIGN KEY('revision') REFERENCES 'databaseRevision' ('revision') ON DELETE CASCADE)",
 
-				"CREATE VIEW DatabaseHistory AS SELECT databaseRevision.revision 'Revision', databaseRevision.date 'Date', databaseRevision.repositoryType 'RepositoryType', databaseVersion.major 'Major', databaseVersion.minor 'Minor', databaseVersion.patch 'Patch', databaseVersion.description 'Description' FROM databaseVersion INNER JOIN databaseRevision ON databaseRevision.revision = databaseVersion.revision",
+				"CREATE VIEW DatabaseHistory AS SELECT databaseRevision.revision 'Revision', databaseRevision.date 'Date', databaseRevision.dbType 'DbType', databaseVersion.major 'Major', databaseVersion.minor 'Minor', databaseVersion.patch 'Patch', databaseVersion.description 'Description' FROM databaseVersion INNER JOIN databaseRevision ON databaseRevision.revision = databaseVersion.revision",
 
-				"INSERT INTO databaseRevision('revision', 'repositoryType') VALUES(-1, 'AbstractDB')",
+				"INSERT INTO databaseRevision('revision', 'dbType') VALUES(-1, 'AbstractDB')",
 				"INSERT INTO databaseVersion('revision', 'major', 'minor', 'patch', 'description') VALUES(-1, 0, 0, 0, 'Initializing')"
 			};
 
-			foreach(string command in commands)
+			foreach(string cmdText in commands)
 			{
-				var sqcommand = connection.CreateCommand(command);
-				sqcommand.ExecuteNonQuery();
+				ExecuteNonQuery(cmdText);
 			}
+		}
+
+		public IEnumerable<IRevisionInfo> GetRevisionHistory()
+		{
+			throw new NotImplementedException();
+		}
+
+		public IRevisionInfo GetCurrentRevision()
+		{
+			string cmdText = @"";
+
+			SQLiteCommand command = connection.CreateCommand(cmdText);
+
+			throw new NotImplementedException();
 		}
 	}
 }
