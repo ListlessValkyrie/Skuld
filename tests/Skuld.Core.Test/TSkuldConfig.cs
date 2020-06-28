@@ -5,6 +5,7 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
+using Skuld.Architecture;
 
 namespace Skuld.Core.Test
 {
@@ -16,11 +17,11 @@ namespace Skuld.Core.Test
 		{
 			string tempFile = Tools.GetTempFilenameWithExtension(".sqlite");
 
-			SkuldConfig config = new SkuldConfig(tempFile);
-
+			ISkuldConfig config = new SkuldConfig(tempFile);
 			StringAssert.AreEqualIgnoringCase(tempFile, config.AbsFilePath);
 
 			System.Diagnostics.Process.Start(tempFile);
+			Assert.AreEqual(0, config.GetCurrentVersion().Revision);
 		}
 	}
 }

@@ -13,8 +13,4 @@
     <ProjectReference Include="..\Skuld.Architecture\Skuld.Architecture.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="UpdateScripts\" />
-  </ItemGroup>
-
 </Project>

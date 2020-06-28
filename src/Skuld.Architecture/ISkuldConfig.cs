@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.IO;
 
 namespace Skuld.Architecture
 {
 	public interface ISkuldConfig
 	{
-		IEnumerable<IRevisionInfo> GetRevisionHistory();
+		IEnumerable<IDatabaseVersion> GetRevisionHistory();
 
-		IRevisionInfo GetCurrentRevision();
+		IDatabaseVersion GetCurrentVersion();
+
+		string AbsFilePath { get; }
 	}
 }

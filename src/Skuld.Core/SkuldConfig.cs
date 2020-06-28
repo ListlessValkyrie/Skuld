@@ -1,4 +1,6 @@
 ﻿using Skuld.Architecture;
+using Skuld.Core.Dtos;
+using Skuld.Core.UpdateScripts;
 using SQLite;
 using System;
 using System.Collections.Generic;
@@ -27,6 +29,29 @@ namespace Skuld.Core
 			connection = new SQLiteConnection(AbsFilePath);
 
 			if (!connection.GetTableInfo("databaseRevision").Any()) HandleCreateBaseTables();
+
+			HandleSchemaUpdates();
+		}
+
+		private void HandleSchemaUpdates()
+		{
+			UpdateScriptFactory.Update(this);
+		}
+
+		public int ExecuteAsTransaction(IEnumerable<string> cmdTexts)
+		{
+			int numRows = 0;
+
+			connection.BeginTransaction();
+
+			foreach(string cmdText in cmdTexts)
+			{
+				numRows += connection.Execute(cmdText);
+			}
+
+			connection.Commit();
+
+			return numRows;
 		}
 
 		public int ExecuteNonQuery(string cmdText)
@@ -54,18 +79,19 @@ namespace Skuld.Core
 			}
 		}
 
-		public IEnumerable<IRevisionInfo> GetRevisionHistory()
+		public IEnumerable<IDatabaseVersion> GetRevisionHistory()
 		{
 			throw new NotImplementedException();
 		}
 
-		public IRevisionInfo GetCurrentRevision()
+		public IDatabaseVersion GetCurrentVersion()
 		{
-			string cmdText = @"";
+			string cmdText = @"SELECT revision, major, minor, patch, description FROM databaseVersion ORDER BY revision DESC LIMIT 1";
 
 			SQLiteCommand command = connection.CreateCommand(cmdText);
 
-			throw new NotImplementedException();
+			return command.ExecuteQuery<DatabaseVersionDto>()
+				.FirstOrDefault(); ;
 		}
 	}
 }
