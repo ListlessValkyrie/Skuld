@@ -16,7 +16,7 @@ namespace Skuld.Core.UpdateScripts
 
 		public static int LatestRevision() => UpdateScripts.Last().Revision;
 
-		private static void HandleRunUpdates(SkuldConfig skuldConfig, int currentRevision)
+		private static void HandleRunUpdates(SkuldDB skuldConfig, int currentRevision)
 		{
 			foreach(IUpdateScript updateScript in UpdateScripts)
 			{
@@ -26,12 +26,12 @@ namespace Skuld.Core.UpdateScripts
 			}
 		}
 
-		private static int ApplyUpdateScript(SkuldConfig skuldConfig, IUpdateScript updateScript)
+		private static int ApplyUpdateScript(SkuldDB skuldConfig, IUpdateScript updateScript)
 		{
 			return skuldConfig.ExecuteAsTransaction(updateScript.UpdateCommands);
 		}
 
-		public static void Update(this SkuldConfig skuldConfig)
+		public static void Update(this SkuldDB skuldConfig)
 		{
 			if (skuldConfig == null) throw new ArgumentNullException("skuldConfig");
 

@@ -5,7 +5,7 @@ using System.IO;
 
 namespace Skuld.Architecture
 {
-	public interface ISkuldConfig
+	public interface ISkuldDB
 	{
 		IEnumerable<IDatabaseVersion> GetRevisionHistory();
 

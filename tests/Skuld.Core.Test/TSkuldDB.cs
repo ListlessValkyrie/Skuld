@@ -10,14 +10,14 @@ using Skuld.Architecture;
 namespace Skuld.Core.Test
 {
 	[TestFixture]
-	public class TSkuldConfig
+	public class TSkuldDB
 	{
 		[Test]
 		public void Init()
 		{
 			string tempFile = Tools.GetTempFilenameWithExtension(".sqlite");
 
-			ISkuldConfig config = new SkuldConfig(tempFile);
+			ISkuldDB config = new SkuldDB(tempFile);
 			StringAssert.AreEqualIgnoringCase(tempFile, config.AbsFilePath);
 
 			System.Diagnostics.Process.Start(tempFile);
