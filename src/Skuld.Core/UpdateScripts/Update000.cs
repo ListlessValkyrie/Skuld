@@ -11,8 +11,8 @@ namespace Skuld.Core.UpdateScripts
 
 		public override IEnumerable<string> UpdateCommands { get; } = new string[]
 		{
-			"INSERT INTO databaseRevision('revision', 'dbType') VALUES(1, 'SkuldDB')",
-			"INSERT INTO databaseVersion('revision', 'major', 'minor', 'patch', 'description') VALUES(1, 1, 0, 0, 'Base functionality')"
+			"INSERT INTO databaseRevision('revision', 'dbType') VALUES(0, 'SkuldDB')",
+			"INSERT INTO databaseVersion('revision', 'major', 'minor', 'patch', 'description') VALUES(0, 1, 0, 0, 'Base functionality')"
 		};
 	}
 }

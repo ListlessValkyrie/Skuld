@@ -4,12 +4,11 @@ using Skuld.Core.UpdateScripts;
 using SQLite;
 using System;
 using System.Collections.Generic;
-using System.Dynamic;
 using System.Linq;
 
 namespace Skuld.Core
 {
-	public class SkuldDB : ISkuldDB
+    public class SkuldDB : ISkuldDB
 	{
 		public string AbsFilePath { get; }
 
@@ -17,7 +16,8 @@ namespace Skuld.Core
 
 		public SkuldDB(string absFilePath)
 		{
-			if (string.IsNullOrEmpty(absFilePath)) throw new ArgumentOutOfRangeException("absFilePath");
+			if (string.IsNullOrEmpty(absFilePath)) 
+				throw new ArgumentOutOfRangeException("absFilePath");
 
 			AbsFilePath = absFilePath;
 			HandleStartup();
@@ -29,7 +29,8 @@ namespace Skuld.Core
 
 			connection = new SQLiteConnection(AbsFilePath);
 
-			if (!connection.GetTableInfo("databaseRevision").Any()) HandleCreateBaseTables();
+			if (!connection.GetTableInfo("databaseRevision").Any()) 
+				HandleCreateBaseTables();
 
 			HandleSchemaUpdates();
 		}

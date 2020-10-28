@@ -16,14 +16,16 @@ namespace Skuld.Core
 
 		public static T AddOrUpdate<T>(string key, T value)
 		{
-			if (skuldDB == null) throw new InvalidOperationException("SkuldConfig is not configured, run Configure() first");
+			if (skuldDB == null) 
+				throw new InvalidOperationException("SkuldConfig is not configured, run Configure() first");
 
 			throw new NotImplementedException();
 		}
 
 		public static T GetOrAdd<T>(string key, T value)
 		{
-			if (skuldDB == null) throw new InvalidOperationException("SkuldConfig is not configured, run Configure() first");
+			if (skuldDB == null) 
+				throw new InvalidOperationException("SkuldConfig is not configured, run Configure() first");
 
 			throw new NotImplementedException();
 		}

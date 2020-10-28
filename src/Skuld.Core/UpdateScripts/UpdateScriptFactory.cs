@@ -20,7 +20,8 @@ namespace Skuld.Core.UpdateScripts
 		{
 			foreach(IUpdateScript updateScript in UpdateScripts)
 			{
-				if (updateScript.Revision <= currentRevision) continue;
+				if (updateScript.Revision <= currentRevision)
+					continue;
 
 				ApplyUpdateScript(skuldConfig, updateScript);
 			}
@@ -33,14 +34,13 @@ namespace Skuld.Core.UpdateScripts
 
 		public static void Update(this SkuldDB skuldConfig)
 		{
-			if (skuldConfig == null) throw new ArgumentNullException("skuldConfig");
+			if (skuldConfig == null) 
+				throw new ArgumentNullException("skuldConfig");
 
 			int currentRevision = skuldConfig.GetCurrentVersion().Revision;
 
-			if (currentRevision < LatestRevision())
-			{
+			if (currentRevision < LatestRevision())			
 				HandleRunUpdates(skuldConfig, currentRevision);
-			}
 		}
 	}
 }

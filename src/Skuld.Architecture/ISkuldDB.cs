@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.IO;
+﻿using System.Collections.Generic;
 
 namespace Skuld.Architecture
 {
-	public interface ISkuldDB
+    public interface ISkuldDB
 	{
 		IEnumerable<IDatabaseVersion> GetRevisionHistory();
 
